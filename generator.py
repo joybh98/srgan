@@ -3,39 +3,31 @@
 
 import tensorflow as tf
 import tensorlayer as tl
-from tensorlayer.layers import (Input, Conv2d, BatchNorm2d, Elementwise, SubpixelConv2d, Flatten, Dense)
-from tensorlayer.models import Model
+from tensorflow.keras.layers import BatchNormalization,Conv2D
+from tensorlayer.layers import (Elementwise)
 
-def get_G(input_shape):
-    w_init = tf.random_normal_initializer(stddev=0.02)
-    g_init = tf.random_normal_initializer(1., 0.02)
-
-    nin = Input(input_shape)
-    n = Conv2d(64, (3, 3), (1, 1), act=tf.nn.relu, padding='SAME', W_init=w_init)(nin)
+def generator():
+    inputs = tf.keras.Input(shape=(32,32,3))
+    n = tf.keras.layers.Conv2D(32,(3,3),strides=(1,1),padding="same",activation='relu')(inputs)
     temp = n
 
-    # B residual blocks
-    for i in range(16):
-        nn = Conv2d(64, (3, 3), (1, 1), padding='SAME', W_init=w_init, b_init=None)(n)
-        nn = BatchNorm2d(act=tf.nn.relu, gamma_init=g_init)(nn)
-        nn = Conv2d(64, (3, 3), (1, 1), padding='SAME', W_init=w_init, b_init=None)(nn)
-        nn = BatchNorm2d(gamma_init=g_init)(nn)
-        nn = Elementwise(tf.add)([n, nn])
-        n = nn
+    # Identity Block
+    for i in range(15):
+        nn = tf.keras.layers.Conv2D(32,(3,3),strides=(1,1),padding="same",activation='relu')(inputs)
+        nn = tf.keras.layers.BatchNormalization()        
+        nn = tf.keras.layers.Conv2D(32,(3,3),strides=(1,1),padding="same",activation='relu')(inputs)
+        nn = tf.keras.layers.BatchNormalization()
+        # TODO: Implement elementwise layer
+        #n = nn 
+        break
+    outputs = tf.keras.layers.Conv2D(32,(3,3),padding='same',activation='tanh')(n)
+    model = tf.keras.Model(inputs=inputs,outputs=outputs)
 
-    n = Conv2d(64, (3, 3), (1, 1), padding='SAME', W_init=w_init, b_init=None)(n)
-    n = BatchNorm2d(gamma_init=g_init)(n)
-    n = Elementwise(tf.add)([n, temp])
-    # B residual blacks end
+    return model
 
-    n = Conv2d(256, (3, 3), (1, 1), padding='SAME', W_init=w_init)(n)
-    n = SubpixelConv2d(scale=2, n_out_channels=None, act=tf.nn.relu)(n)
+def compile(model):
+    model.compile(optimizer='rmsprop')
 
-    n = Conv2d(256, (3, 3), (1, 1), act=None, padding='SAME', W_init=w_init)(n)
-    n = SubpixelConv2d(scale=2, n_out_channels=None, act=tf.nn.relu)(n)
-
-    nn = Conv2d(3, (1, 1), (1, 1), act=tf.nn.tanh, padding='SAME', W_init=w_init)(n)
-    G = Model(inputs=nin, outputs=nn, name="generator")
-    return G
-
-get_G((32,32,3))
+genmodel = generator()
+genmodel.compile()
+genmodel.summary()
