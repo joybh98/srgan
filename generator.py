@@ -13,17 +13,21 @@ def generator():
 
     # Identity Block
     for i in range(15):
-        nn = tf.keras.layers.Conv2D(32,(3,3),strides=(1,1),padding="same",activation='relu')(inputs)
-        nn = tf.keras.layers.BatchNormalization()        
-        nn = tf.keras.layers.Conv2D(32,(3,3),strides=(1,1),padding="same",activation='relu')(inputs)
-        nn = tf.keras.layers.BatchNormalization()
-        # TODO: Implement elementwise layer
-        #n = nn 
+        nn = tf.keras.layers.Conv2D(32,(3,3),strides=(1,1),padding="same",activation='relu')(n)
+        nn = tf.keras.layers.BatchNormalization()(n)        
+        nn = tf.keras.layers.Conv2D(32,(3,3),strides=(1,1),padding="same",activation='relu')(n)
+        nn = tf.keras.layers.BatchNormalization()(n)
+        Elementwise(tf.add)([n,nn])
+        n = nn 
         break
+
+    n = tf.keras.layers.Conv2D(32,(3,3),strides=(1,1),padding="same")(n)
+    n = tf.keras.layers.BatchNormalization()(n)
     outputs = tf.keras.layers.Conv2D(32,(3,3),padding='same',activation='tanh')(n)
     model = tf.keras.Model(inputs=inputs,outputs=outputs)
 
     return model
+
 
 def compile(model):
     model.compile(optimizer='rmsprop')
