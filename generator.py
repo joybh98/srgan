@@ -17,7 +17,7 @@ def generator():
         nn = tf.keras.layers.BatchNormalization()(n)        
         nn = tf.keras.layers.Conv2D(32,(3,3),strides=(1,1),padding="same",activation='relu')(n)
         nn = tf.keras.layers.BatchNormalization()(n)
-        Elementwise(tf.add)([n,nn])
+        tf.math.add(n,nn)
         n = nn 
         break
 
