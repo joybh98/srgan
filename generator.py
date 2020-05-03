@@ -1,7 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras.layers import BatchNormalization,Conv2D,Input,PReLU,Add
 from tensorflow.python.keras.models import Model
-#TODO: Pixel shuffle
 #TODO: Upsample
 
 def generator(num_filters=64):
