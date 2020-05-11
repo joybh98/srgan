@@ -11,11 +11,11 @@ config.train.n_epoch_init = 10
 config.TRAIN.n_epoch = 100
 
 # TRAIN set location
-# config.TRAIN.hr_img_path
-# config.TRAIN.lr_img_path
+config.TRAIN.hr_img_path = '/home/joy/datasets/64x/train/'
+config.TRAIN.lr_img_path = '/home/joy/datasets/32x/train/'
 # TEST set location
-# config.TRAIN.hr_img_path
-# config.TRAIN.lr_img_path
+config.TEST.hr_img_path = '/home/joy/datasets/64x/test/'
+config.TEST.lr_img_path = '/home/joy/datasets/32x/test/'
 
 config.VALID = edict()
 
