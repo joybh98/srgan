@@ -6,9 +6,10 @@ from tensorlayer.models import Model
 
 def generator(input_shape):
     w_init = tf.keras.initializers.RandomNormal(stddev=0.2, seed=None)
-
+    g_init = tf.random_normal_initializer(1., 0.02)
+    
     nin = Input(input_shape)
-    n = Conv2d(64, (3, 3), (1, 1), act=tf.nn.relu, padding='same', w_init=w_init)(nin)
+    n = Conv2d(64, (3, 3), (1, 1), act=tf.nn.relu, padding='SAME', W_init=w_init)(nin)
     temp = n
 
     for i in range(15):
