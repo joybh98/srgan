@@ -1,3 +1,0 @@
-tensorflow==2.2.0
-tensorlayer==2.2.2
-easydict==1.9
