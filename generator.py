@@ -45,7 +45,9 @@ def make_generator():
 	print(" n resd block end shape ", n.shape)
 
 	n = Conv2D(filters=256,kernel_size=(1,1),strides=(1,1))(n)
-	n = SubPixelConv2d(input_shape=(n.shape),scale=2)(n)
+	# temp fix for "Layers cannot have the same name: fix it"
+	s = n
+	s = SubPixelConv2d(input_shape=(n.shape),scale=2)(n)
 	n = PReLU()(n)
 	
 	print(n.shape)
@@ -62,5 +64,8 @@ def make_generator():
 	print(" o/p layer ", nn.shape)
 	gen = tf.keras.Model(inputs=x_in,outputs=nn)
 
+	return gen
+
 generator = make_generator()
-generator.summary()
+
+# generator.summary()

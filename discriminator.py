@@ -84,5 +84,7 @@ def make_discriminator():
     print(n.shape)
     dis = tf.keras.Model(inputs=n_in,outputs=n)
 
+    return dis
+
 discriminator = make_discriminator()
-discriminator.summary()
+# discriminator.summary()
