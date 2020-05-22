@@ -3,7 +3,7 @@ from tensorflow import keras
 from tensorflow.keras.layers import Conv2D,BatchNormalization,Input,PReLU, LeakyReLU, Dense
 from operations import SubPixelConv2d
 
-def make_generator():
+'''def make_generator():
 	
 	w_init = tf.random_normal_initializer(stddev=0.02)
 	g_init = tf.random_normal_initializer()
@@ -65,6 +65,7 @@ def make_generator():
 
 	return gen
 
+gen = make_generator()'''
 
 def make_discriminator():
 

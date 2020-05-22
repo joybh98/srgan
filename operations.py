@@ -1,21 +1,18 @@
 import tensorflow as tf
 from tensorflow.nn import depth_to_space
 from tensorflow.keras.layers import Lambda
-
 """ Operations which are going to be used in the model frequently or more than once """
-
 """ Pixel Shuffle """
-
 """ Convert shape(N,C,H,W) where N: batch_size, C: channel, H: height, W: width to:
 (N,C/r*r,H*r,W*r) where r is the shuffling factor. 
 Goal is to convert the depth(channel) into space(height and width) """
-
 """ 
     Subpixel convulution
     :param input_shape: tensor_shape, (N,C,H,W)
     :param scale: Upsample factor
 
 """
+
 
 def SubPixelConv2d(input_shape,scale:int):
     # upsample using depth to space
